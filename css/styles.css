@@ -312,7 +312,7 @@ input[type=range]::-moz-range-thumb {
 }
 
 .db-ghost-5 {
-  width: 14px; height: 84px;
+  width: 12px; height: 84px;
   border: 1.5px dashed #c2c5cb;
   border-radius: 4px;
   margin: 0 2px;
@@ -320,7 +320,7 @@ input[type=range]::-moz-range-thumb {
 }
 
 .db-ghost-2_5 {
-  width: 7px; height: 84px;
+  width: 6px; height: 84px;
   border: 1.5px dashed #c2c5cb;
   border-radius: 3px;
   margin: 0 2px;
