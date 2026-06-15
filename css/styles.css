@@ -121,6 +121,7 @@ body {
   align-items: baseline;
   justify-content: center;
   gap: 10px;
+  padding-top: 2em;
 }
 .readout-number {
   font-family: 'Bebas Neue', sans-serif;
@@ -138,7 +139,7 @@ body {
 }
 
 /* Slider — anchored at the bottom, thumb-reachable */
-.controls { display: flex; flex-direction: column; gap: 12px; }
+.controls { padding-top: 2em; display: flex; flex-direction: column; gap: 12px; }
 
 input[type=range] {
   -webkit-appearance: none;
@@ -255,7 +256,7 @@ input[type=range]::-moz-range-thumb {
 /* Fixed end plates welded to the grip — full plate height, a touch wider than a
    loose plate, flush to the grip. */
 .db-fixed {
-  width: 16px; height: 84px;
+  width: 8px; height: 84px;
   background: var(--chrome-bright);
   border-radius: 4px;
   margin: 0;
