@@ -9,8 +9,8 @@
   --plate: #e2e5e9;         /* inset panels / slider track */
   --chrome: #4a4a4a;
   --chrome-bright: #1a1a1a;
-  --accent: #d97a06;
-  --accent-dim: #b5650a;
+  --accent: #1a1a1a;
+  --accent-dim: #4a4a4a;
   --text: #1f2328;
   --muted: #6b7280;
   --green: #2e9e5b;
@@ -186,7 +186,7 @@ input[type=range]::-moz-range-thumb {
 .db-handle {
   width: 64px; height: 22px;
   background: var(--chrome-bright);
-  border-radius: 5px;
+  border-radius: 0;
   margin: 0;
   flex-shrink: 0;
 }
