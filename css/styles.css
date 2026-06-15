@@ -1,64 +1,154 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
   color-scheme: light;
-  --iron: #e8eaed;          /* page background */
-  --steel: #ffffff;         /* card background */
-  --plate: #e2e5e9;         /* inset panels / slider track */
-  --chrome: #4a4a4a;
-  --chrome-bright: #1a1a1a;
+
+  /* Surfaces */
+  --paper: #efeee9;         /* page background */
+  --panel: #e7e6e0;         /* inset panels */
+  --plate: #d8d7d0;         /* slider track */
+
+  /* Ink */
+  --ink: #15171a;
+  --text: #15171a;
+  --chrome: #3c3f44;
+  --chrome-bright: #1a1a1a; /* dumbbell plates */
+  --muted: #56595f;
+
+  /* Accents (monochrome) */
   --accent: #1a1a1a;
   --accent-dim: #4a4a4a;
-  --text: #1f2328;
-  --muted: #6b7280;
-  --green: #2e9e5b;
-  --red: #c33a26;
-  --blue: #2f7fb0;
+  --blue: #2f7fb0;          /* 2.5 lb identifier */
+
+  --line: rgba(21,23,26,0.12);
+  --dot: rgba(21,23,26,0.09);
 }
 
 body {
-  background: var(--iron);
-  color: var(--text);
-  font-family: 'Inter', sans-serif;
   min-height: 100vh;
-  padding: 24px 16px 48px;
+  min-height: 100dvh;
+  color: var(--text);
+  font-family: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
+  background-color: var(--paper);
+  background-image: radial-gradient(var(--dot) 1.3px, transparent 1.4px);
+  background-size: 22px 22px;
+  background-position: -11px -11px;
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* Cards */
-.card {
-  background: var(--steel);
-  border-radius: 14px;
-  padding: 24px;
-  margin-bottom: 16px;
-  max-width: 480px;
-  margin-left: auto;
-  margin-right: auto;
-  border: 1px solid rgba(0,0,0,0.06);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 6px 16px rgba(0,0,0,0.05);
+/* Full-height app column — fills the viewport on a phone */
+.app {
+  width: 100%;
+  max-width: 460px;
+  min-width: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 3vh, 26px);
+  padding: clamp(20px, 5vw, 32px) clamp(18px, 5vw, 30px) clamp(22px, 4vh, 34px);
 }
 
-.card-label {
-  font-size: 10px;
+/* Staggered page-load reveal */
+.app > * { animation: rise 0.6s cubic-bezier(.2,.7,.2,1) both; }
+.masthead { animation-delay: 0.02s; }
+.stage    { animation-delay: 0.10s; }
+.breakdown{ animation-delay: 0.18s; }
+.controls { animation-delay: 0.26s; }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app > * { animation: none; }
+}
+
+/* Masthead */
+.masthead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 14px;
+}
+.brand-name {
+  display: block;
+  font-size: 16px;
   font-weight: 600;
-  letter-spacing: 2.5px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.brand-sub {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   color: var(--muted);
-  margin-bottom: 14px;
-  text-align: center;
+}
+.capacity {
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: var(--muted);
+  white-space: nowrap;
+  padding-top: 4px;
 }
 
-/* Slider */
+/* Stage — dumbbell + giant readout; grows to absorb spare height */
+.stage {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(12px, 2.6vh, 26px);
+}
+
+/* Big weight readout — the answer */
+.readout {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 10px;
+}
+.readout-number {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(108px, 36vw, 172px);
+  line-height: 0.78;
+  letter-spacing: 1px;
+  color: var(--ink);
+}
+.readout-unit {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(30px, 8vw, 46px);
+  line-height: 1;
+  letter-spacing: 1px;
+  color: var(--muted);
+}
+
+/* Slider — anchored at the bottom, thumb-reachable */
+.controls { display: flex; flex-direction: column; gap: 12px; }
+
 input[type=range] {
   -webkit-appearance: none;
+  appearance: none;
   width: 100%;
-  height: 10px;
-  border-radius: 5px;
+  height: 8px;
+  border-radius: 4px;
   background: var(--plate);
   outline: none;
   cursor: pointer;
-  margin-bottom: 12px;
 }
 
 input[type=range]::-webkit-slider-thumb {
@@ -67,8 +157,8 @@ input[type=range]::-webkit-slider-thumb {
   height: 40px;
   border-radius: 50%;
   background: var(--accent);
-  border: 4px solid #ffffff;
-  box-shadow: 0 0 0 1px var(--accent-dim), 0 2px 8px rgba(0,0,0,0.25);
+  border: 4px solid var(--paper);
+  box-shadow: 0 0 0 1px var(--accent-dim), 0 3px 10px rgba(0,0,0,0.28);
   cursor: pointer;
 }
 
@@ -77,66 +167,47 @@ input[type=range]::-moz-range-thumb {
   height: 40px;
   border-radius: 50%;
   background: var(--accent);
-  border: 4px solid #ffffff;
-  box-shadow: 0 0 0 1px var(--accent-dim), 0 2px 8px rgba(0,0,0,0.25);
+  border: 4px solid var(--paper);
+  box-shadow: 0 0 0 1px var(--accent-dim), 0 3px 10px rgba(0,0,0,0.28);
   cursor: pointer;
 }
 
-.slider-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); }
-
-/* Big weight display */
-.weight-display {
+.slider-labels {
   display: flex;
-  align-items: baseline;
-  justify-content: center;
-  gap: 6px;
-  padding: 20px 0 8px;
+  justify-content: space-between;
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: var(--muted);
 }
 
-.weight-number {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 80px;
-  line-height: 1;
-  color: var(--accent);
-  transition: color 0.2s;
-}
-
-.weight-unit {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 28px;
-  color: var(--chrome);
-  margin-bottom: 6px;
-}
-
-/* Plate breakdown */
+/* Plate breakdown — itemized spec sheet */
 .breakdown {
-  background: var(--plate);
-  border-radius: 10px;
-  padding: 16px;
-  margin-top: 8px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 4px 0;
 }
 
 .breakdown-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 6px 0;
-  border-bottom: 1px solid rgba(0,0,0,0.07);
-  font-size: 14px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 15px;
 }
 
 .breakdown-row:last-child { border-bottom: none; }
-.breakdown-row .lbl { color: var(--chrome); display: flex; align-items: center; gap: 8px; }
-.breakdown-row .val { font-weight: 600; color: var(--text); }
-.breakdown-row .sub { font-size: 12px; color: var(--muted); margin-left: 6px; }
+.breakdown-row .lbl { color: var(--chrome); display: flex; align-items: center; gap: 10px; min-width: 0; }
+.breakdown-row .val { font-weight: 500; color: var(--text); white-space: nowrap; flex-shrink: 0; padding-left: 10px; }
+.breakdown-row .sub { font-size: 13px; color: var(--muted); margin-left: 6px; }
 
 /* Sub-label rows (↳ N per side) always reserve the same height so the
    layout below the breakdown never shifts as plates change. */
 .breakdown-row.subrow {
-  padding: 2px 0 2px 18px;
+  padding: 1px 0 4px 20px;
   border-bottom: none;
-  min-height: 20px;
-  font-size: 12px;
+  min-height: 21px;
+  font-size: 13px;
 }
 
 .dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
@@ -145,27 +216,17 @@ input[type=range]::-moz-range-thumb {
 .dot-2_5lb   { background: #283038; border-top: 2px solid var(--blue); }
 .dot-screw   { background: #8a8a8a; }
 
-.total-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 0 0;
-  margin-top: 8px;
-  border-top: 2px solid var(--accent-dim);
-}
-
-.total-row .lbl { font-weight: 600; color: var(--chrome-bright); font-size: 15px; }
-.total-row .val { font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--accent); }
-
 /* Visual dumbbell */
 .dumbbell-viz {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 20px 0 4px;
-  min-height: 54px;
-  overflow: visible;
+  min-height: 86px;
+  /* hidden (not visible) so the fixed-width .db-row can't force the whole
+     layout wider than the viewport; fitViz scales the row to fit this box. */
+  overflow: hidden;
   width: 100%;
+  min-width: 0;
 }
 
 /* inner row holds the actual parts; it scales down to fit narrow screens */
@@ -181,7 +242,7 @@ input[type=range]::-moz-range-thumb {
    solid near-black bars with softly rounded corners, and grey screws shown in
    profile (a cap + a threaded shank) rather than as a circle. */
 
-/* Center grip — thick rounded bar, butted flush against the fixed plates so the
+/* Center grip — squared bar, butted flush against the fixed plates so the
    grip + fixed plates read as one continuous handle. */
 .db-handle {
   width: 64px; height: 22px;
@@ -203,7 +264,7 @@ input[type=range]::-moz-range-thumb {
 
 /* 5 lb plate — tall flat black bar */
 .db-plate-5 {
-  width: 14px; height: 84px;
+  width: 12px; height: 84px;
   background: var(--chrome-bright);
   border-radius: 4px;
   margin: 0 2px;
@@ -212,7 +273,7 @@ input[type=range]::-moz-range-thumb {
 
 /* 2.5 lb micro plate — exactly half the width of a 5 lb plate, same height */
 .db-plate-2_5 {
-  width: 7px; height: 84px;
+  width: 6px; height: 84px;
   background: var(--chrome-bright);
   border-radius: 3px;
   margin: 0 2px;
@@ -268,23 +329,12 @@ input[type=range]::-moz-range-thumb {
 /* Legend */
 .legend {
   display: flex;
-  gap: 12px;
+  gap: 10px 16px;
   flex-wrap: wrap;
   justify-content: center;
-  font-size: 11px;
-  color: var(--muted);
-  margin-top: 8px;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+  color: var(--chrome);
 }
 
-.legend-item { display: flex; align-items: center; gap: 5px; }
-
-.note {
-  text-align: center;
-  font-size: 11px;
-  color: var(--muted);
-  max-width: 480px;
-  margin: 16px auto 0;
-  line-height: 1.6;
-}
-
-.note strong { color: var(--chrome); }
+.legend-item { display: flex; align-items: center; gap: 6px; }

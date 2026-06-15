@@ -30,7 +30,7 @@ const WEIGHT_LIST = buildWeightList();
 // WEIGHT_LIST: 10,15,20,25,30,35,40,45,50,55,60,65,70,75,80
 
 function buildBreakdown(cfg) {
-  const { w, n5, micro, screwsOff } = cfg;
+  const { n5, micro, screwsOff } = cfg;
   const plateLb = n5 * 2 * 5;
   const microLb = micro ? 5 : 0;
 
@@ -94,10 +94,6 @@ function buildBreakdown(cfg) {
     </div>`;
   }
 
-  html += `<div class="total-row">
-    <span class="lbl">Total</span>
-    <span class="val">${w} LB</span>
-  </div>`;
   return html;
 }
 
@@ -168,6 +164,7 @@ function fitViz(containerId) {
 function updateSlider() {
   const idx = parseInt(document.getElementById('weightSlider').value);
   const cfg = WEIGHT_LIST[idx];
+  document.getElementById('heroWeight').textContent = cfg.w;
   document.getElementById('sliderViz').innerHTML = buildViz(cfg);
   document.getElementById('sliderBreakdown').innerHTML = buildBreakdown(cfg);
   fitViz('sliderViz');
