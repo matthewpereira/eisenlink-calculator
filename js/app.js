@@ -45,12 +45,12 @@ function buildBreakdown(cfg) {
   // Locking screws
   if (screwsOff) {
     html += `<div class="breakdown-row">
-      <span class="lbl" style="color:var(--muted);"><span class="dot dot-screw" style="width:10px;height:10px;border-radius:50%;opacity:.3;"></span> Locking screws</span>
+      <span class="lbl" style="color:var(--muted);"><span class="dot dot-screw" style="width:10px;height:10px;opacity:.3;"></span> Locking screws</span>
       <span class="val" style="color:var(--muted);font-size:12px;">removed — bare handle</span>
     </div>`;
   } else {
     html += `<div class="breakdown-row">
-      <span class="lbl"><span class="dot dot-screw" style="width:10px;height:10px;border-radius:50%;"></span> Locking screws (×2)</span>
+      <span class="lbl"><span class="dot dot-screw" style="width:10px;height:10px;"></span> Locking screws (×2)</span>
       <span class="val">2 × 2.5 = <span class="sub">5 lb</span></span>
     </div>`;
   }
@@ -107,7 +107,8 @@ function buildViz(cfg) {
   if (screwsOff) {
     html += `<div class="db-screw-slot"></div>`;
   } else {
-    html += `<div class="db-screw"></div>`;
+    // cap on the outer left, shank pointing right (inward)
+    html += `<div class="db-screw"><span class="db-screw-cap"></span><span class="db-screw-shank"></span></div>`;
   }
 
   // 2.5 micro (outermost after screw)
@@ -137,7 +138,8 @@ function buildViz(cfg) {
   if (screwsOff) {
     html += `<div class="db-screw-slot"></div>`;
   } else {
-    html += `<div class="db-screw"></div>`;
+    // shank pointing left (inward), cap on the outer right
+    html += `<div class="db-screw"><span class="db-screw-shank"></span><span class="db-screw-cap"></span></div>`;
   }
 
   html += '</div>';
