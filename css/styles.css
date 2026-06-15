@@ -1,0 +1,317 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  color-scheme: light;
+  --iron: #e8eaed;          /* page background */
+  --steel: #ffffff;         /* card background */
+  --plate: #e2e5e9;         /* inset panels / slider track */
+  --chrome: #4a4a4a;
+  --chrome-bright: #1a1a1a;
+  --accent: #d97a06;
+  --accent-dim: #b5650a;
+  --text: #1f2328;
+  --muted: #6b7280;
+  --green: #2e9e5b;
+  --red: #c33a26;
+  --blue: #2f7fb0;
+}
+
+body {
+  background: var(--iron);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  padding: 24px 16px 48px;
+}
+
+/* Cards */
+.card {
+  background: var(--steel);
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 16px;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 6px 16px rgba(0,0,0,0.05);
+}
+
+.card-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+/* Slider */
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  background: var(--plate);
+  outline: none;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 4px solid #ffffff;
+  box-shadow: 0 0 0 1px var(--accent-dim), 0 2px 8px rgba(0,0,0,0.25);
+  cursor: pointer;
+}
+
+input[type=range]::-moz-range-thumb {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 4px solid #ffffff;
+  box-shadow: 0 0 0 1px var(--accent-dim), 0 2px 8px rgba(0,0,0,0.25);
+  cursor: pointer;
+}
+
+.slider-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); }
+
+/* Big weight display */
+.weight-display {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+  padding: 20px 0 8px;
+}
+
+.weight-number {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 80px;
+  line-height: 1;
+  color: var(--accent);
+  transition: color 0.2s;
+}
+
+.weight-unit {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  color: var(--chrome);
+  margin-bottom: 6px;
+}
+
+/* Plate breakdown */
+.breakdown {
+  background: var(--plate);
+  border-radius: 10px;
+  padding: 16px;
+  margin-top: 8px;
+}
+
+.breakdown-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+  font-size: 14px;
+}
+
+.breakdown-row:last-child { border-bottom: none; }
+.breakdown-row .lbl { color: var(--chrome); display: flex; align-items: center; gap: 8px; }
+.breakdown-row .val { font-weight: 600; color: var(--text); }
+.breakdown-row .sub { font-size: 12px; color: var(--muted); margin-left: 6px; }
+
+/* Sub-label rows (↳ N per side) always reserve the same height so the
+   layout below the breakdown never shifts as plates change. */
+.breakdown-row.subrow {
+  padding: 2px 0 2px 18px;
+  border-bottom: none;
+  min-height: 20px;
+  font-size: 12px;
+}
+
+.dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+.dot-handle  { background: #4d4d4d; }
+.dot-5lb     { background: #2a2a2a; border: 1px solid #4a4a4a; }
+.dot-2_5lb   { background: #283038; border-top: 2px solid var(--blue); }
+.dot-screw   { background: radial-gradient(circle at 35% 30%, #f0f0f0, #999 70%, #666); border-radius: 50% !important; }
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0 0;
+  margin-top: 8px;
+  border-top: 2px solid var(--accent-dim);
+}
+
+.total-row .lbl { font-weight: 600; color: var(--chrome-bright); font-size: 15px; }
+.total-row .val { font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--accent); }
+
+/* Visual dumbbell */
+.dumbbell-viz {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0 4px;
+  min-height: 54px;
+  overflow: visible;
+  width: 100%;
+}
+
+/* inner row holds the actual parts; it scales down to fit narrow screens */
+.db-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: center center;
+  flex-shrink: 0;
+}
+
+.db-handle {
+  width: 72px; height: 22px;
+  background:
+    repeating-linear-gradient(90deg, #3a3a3a 0 2px, #4d4d4d 2px 4px),
+    linear-gradient(180deg, #5a5a5a 0%, #2e2e2e 50%, #444 100%);
+  border-radius: 3px;
+  flex-shrink: 0;
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.12), inset 0 -2px 3px rgba(0,0,0,0.5);
+}
+
+.db-fixed {
+  width: 14px; height: 52px;
+  background: linear-gradient(180deg, #4a4a4a 0%, #2a2a2a 50%, #383838 100%);
+  border-radius: 3px;
+  flex-shrink: 0;
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.1), inset 0 -2px 3px rgba(0,0,0,0.5);
+}
+
+/* 5 lb plate — square, matte black, center groove */
+.db-plate-5 {
+  position: relative;
+  width: 15px; height: 58px;
+  background: linear-gradient(180deg, #353535 0%, #1d1d1d 50%, #2c2c2c 100%);
+  border-radius: 3px;
+  margin: 0 1.5px;
+  flex-shrink: 0;
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.08), inset 0 -2px 3px rgba(0,0,0,0.55), 0 1px 2px rgba(0,0,0,0.4);
+}
+/* center groove down the plate */
+.db-plate-5::before {
+  content: '';
+  position: absolute;
+  top: 10%; bottom: 10%; left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.5);
+  border-radius: 1px;
+  box-shadow: 1px 0 0 rgba(255,255,255,0.04);
+}
+
+/* 2.5 lb micro plate — square, matte black with blue edge id, side cutouts */
+.db-plate-2_5 {
+  position: relative;
+  width: 7px; height: 46px;
+  background: linear-gradient(180deg, #2f3a42 0%, #1b2228 50%, #283038 100%);
+  border-radius: 3px;
+  margin: 0 1.5px;
+  flex-shrink: 0;
+  border-top: 2px solid var(--blue);
+  box-shadow: inset 0 -2px 3px rgba(0,0,0,0.55), 0 1px 2px rgba(0,0,0,0.4);
+}
+/* two side cutouts that lighten the 2.5 plate */
+.db-plate-2_5::before,
+.db-plate-2_5::after {
+  content: '';
+  position: absolute;
+  top: 42%; height: 16%;
+  width: 2px;
+  background: rgba(0,0,0,0.45);
+  border-radius: 1px;
+}
+.db-plate-2_5::before { left: 1px; }
+.db-plate-2_5::after  { right: 1px; }
+
+/* Locking screw — silver steel with flat round end cap */
+.db-screw {
+  position: relative;
+  width: 22px; height: 22px;
+  background: radial-gradient(circle at 35% 30%, #f5f5f5 0%, #c0c0c0 40%, #888 75%, #5a5a5a 100%);
+  border: 1.5px solid #3a3a3a;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin: 0 3px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.5), inset 0 1px 2px rgba(255,255,255,0.5), inset 0 -2px 3px rgba(0,0,0,0.3);
+  z-index: 2;
+}
+/* recessed hex/slot detail on the screw cap */
+.db-screw::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 9px; height: 9px;
+  background: radial-gradient(circle at 40% 35%, #9a9a9a, #6e6e6e);
+  border: 1px solid #4a4a4a;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.4);
+}
+/* keeps a permanent slot for the screw even when removed, so the row width
+   (and the whole layout) doesn't shift between 10 lb and 15 lb */
+.db-screw-slot {
+  width: 22px; height: 22px;
+  margin: 0 3px;
+  flex-shrink: 0;
+  visibility: hidden;
+}
+
+.db-ghost-5 {
+  width: 15px; height: 58px;
+  border: 1px dashed #b8bcc2;
+  border-radius: 3px;
+  margin: 0 1.5px;
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+
+.db-ghost-2_5 {
+  width: 7px; height: 46px;
+  border: 1px dashed #aebfc9;
+  border-radius: 3px;
+  margin: 0 1.5px;
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+
+/* Legend */
+.legend {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 8px;
+}
+
+.legend-item { display: flex; align-items: center; gap: 5px; }
+
+.note {
+  text-align: center;
+  font-size: 11px;
+  color: var(--muted);
+  max-width: 480px;
+  margin: 16px auto 0;
+  line-height: 1.6;
+}
+
+.note strong { color: var(--chrome); }

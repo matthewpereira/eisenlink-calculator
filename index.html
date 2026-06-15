@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eisenlink Weight Calculator</title>
+<link rel="stylesheet" href="css/styles.css">
+<script src="js/app.js" defer></script>
+</head>
+<body>
+
+<!-- PLATE CONFIGURATION (top) -->
+<div class="card config-card">
+  <div class="card-label">Plate Configuration</div>
+  <div class="dumbbell-viz" id="sliderViz"></div>
+  <div class="legend">
+    <div class="legend-item"><div class="dot dot-handle"></div> Handle (10 lb)</div>
+    <div class="legend-item"><div class="dot dot-5lb"></div> 5 lb plate</div>
+    <div class="legend-item"><div class="dot dot-2_5lb"></div> 2.5 lb plate</div>
+    <div class="legend-item"><div class="dot dot-screw" style="width:10px;height:10px;border-radius:50%;display:inline-block;"></div> 2.5 lb screw</div>
+  </div>
+  <div class="breakdown" id="sliderBreakdown"></div>
+</div>
+
+<!-- WEIGHT SLIDER (bottom, thumb-reachable) -->
+<div class="card slider-card">
+  <input type="range" id="weightSlider" min="0" max="28" step="1" value="8">
+  <div class="slider-labels"><span>10 lb</span><span>45 lb</span><span>80 lb</span></div>
+</div>
+
+</body>
+</html>
