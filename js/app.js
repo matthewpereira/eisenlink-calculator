@@ -88,7 +88,10 @@ function buildBreakdown(cfg) {
       <span class="lbl" style="color:var(--muted);"><span class="dot dot-2_5lb" style="opacity:.3"></span> 2.5 lb micro plates</span>
       <span class="val" style="color:var(--muted);">not used</span>
     </div>
-    <div class="breakdown-row subrow"><span class="lbl">&nbsp;</span><span></span></div>`;
+    <div class="breakdown-row subrow">
+      <span class="lbl" style="color:var(--muted);font-size:12px;">↳ 1 per side, outermost</span>
+      <span></span>
+    </div>`;
   }
 
   html += `<div class="total-row">
