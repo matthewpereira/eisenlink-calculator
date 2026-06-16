@@ -260,7 +260,7 @@ input[type=range]::-moz-range-thumb {
 .db-fixed {
   width: 8px; height: 84px;
   background: var(--handle);
-  border-radius: 4px;
+  border-radius: 1px;
   margin: 0;
   flex-shrink: 0;
 }
@@ -269,7 +269,7 @@ input[type=range]::-moz-range-thumb {
 .db-plate-5 {
   width: 12px; height: 84px;
   background: var(--chrome-bright);
-  border-radius: 4px;
+  border-radius: 2px;
   margin: 0 2px;
   flex-shrink: 0;
 }
@@ -278,7 +278,7 @@ input[type=range]::-moz-range-thumb {
 .db-plate-2_5 {
   width: 6px; height: 84px;
   background: var(--chrome-25plate);
-  border-radius: 3px;
+  border-radius: 1px;
   margin: 0 2px;
   flex-shrink: 0;
 }
@@ -301,7 +301,7 @@ input[type=range]::-moz-range-thumb {
 .db-screw-shank {
   width: 16px; height: 9px;
   background: #8a8a8a;
-  border-radius: 2px;
+  border-radius: 0px 2px 2px 0px;
   flex-shrink: 0;
 }
 /* keeps a permanent slot for the screw even when removed, so the row width
