@@ -15,7 +15,9 @@
   --text: #15171a;
   --chrome: #3c3f44;
   --chrome-bright: #1a1a1a; /* dumbbell plates */
+  --chrome-25plate: #666;
   --muted: #56595f;
+  --handle: #333;
 
   /* Accents (monochrome) */
   --accent: #1a1a1a;
@@ -247,7 +249,7 @@ input[type=range]::-moz-range-thumb {
    grip + fixed plates read as one continuous handle. */
 .db-handle {
   width: 64px; height: 22px;
-  background: var(--chrome-bright);
+  background: var(--handle);
   border-radius: 0;
   margin: 0;
   flex-shrink: 0;
@@ -257,7 +259,7 @@ input[type=range]::-moz-range-thumb {
    loose plate, flush to the grip. */
 .db-fixed {
   width: 8px; height: 84px;
-  background: var(--chrome-bright);
+  background: var(--handle);
   border-radius: 4px;
   margin: 0;
   flex-shrink: 0;
@@ -275,7 +277,7 @@ input[type=range]::-moz-range-thumb {
 /* 2.5 lb micro plate — exactly half the width of a 5 lb plate, same height */
 .db-plate-2_5 {
   width: 6px; height: 84px;
-  background: var(--chrome-bright);
+  background: var(--chrome-25plate);
   border-radius: 3px;
   margin: 0 2px;
   flex-shrink: 0;
