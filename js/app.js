@@ -76,7 +76,7 @@ function buildBreakdown(cfg) {
   // 2.5 lb micro plates
   if (micro) {
     html += `<div class="breakdown-row">
-      <span class="lbl"><span class="dot dot-2_5lb"></span> 2.5 lb micro plates</span>
+      <span class="lbl"><span class="dot dot-2_5lb"></span> 2.5 lb plates</span>
       <span class="val">2 plates <span class="sub">× 2.5 = ${microLb} lb</span></span>
     </div>
     <div class="breakdown-row subrow">
