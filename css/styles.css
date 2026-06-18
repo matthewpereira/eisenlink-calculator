@@ -79,6 +79,7 @@ body {
   gap: 12px;
   border-bottom: 1px solid var(--line);
   padding-bottom: 14px;
+  display: none;
 }
 .brand-name {
   display: block;
