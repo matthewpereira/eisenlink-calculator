@@ -296,13 +296,13 @@ input[type=range]::-moz-range-thumb {
 .db-screw-cap {
   width: 10px; height: 30px;
   background: #8a8a8a;
-  border-radius: 3px;
+  border-radius: 2px;
   flex-shrink: 0;
 }
 .db-screw-shank {
   width: 16px; height: 9px;
   background: #8a8a8a;
-  border-radius: 0px 2px 2px 0px;
+  border-radius: 1px;
   flex-shrink: 0;
 }
 /* keeps a permanent slot for the screw even when removed, so the row width
