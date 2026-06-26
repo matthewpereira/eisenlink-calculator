@@ -11,31 +11,21 @@
 
 <main class="app">
 
-  <header class="masthead">
-    <span class="brand">
-      <span class="brand-name">Eisenlink</span>
-      <span class="brand-sub">Adjustable Dumbbell</span>
-    </span>
-    <span class="capacity">10–80 LB</span>
-  </header>
+  <section class="readout">
+    <span class="readout-number" id="heroWeight">45</span>
+    <span class="readout-unit">lb</span>
+  </section>
 
   <section class="stage">
     <div class="dumbbell-viz" id="sliderViz"></div>
-    <div class="legend">
-      <div class="legend-item"><div class="dot dot-handle"></div> Handle</div>
-      <div class="legend-item"><div class="dot dot-5lb"></div> 5 lb plate</div>
-      <div class="legend-item"><div class="dot dot-2_5lb"></div> 2.5 lb plate</div>
-      <div class="legend-item"><div class="dot dot-screw" style="width:10px;height:10px;display:inline-block;"></div> Screw</div>
-    </div>
-    <div class="readout">
-      <span class="readout-number" id="heroWeight">45</span>
-      <span class="readout-unit">lb</span>
-    </div>
   </section>
 
   <section class="breakdown" id="sliderBreakdown"></section>
 
-  <footer class="controls">
+  <!-- Hidden during user testing of the touch-drag gesture. Remove "is-hidden"
+       to bring the slider back. The input stays in the DOM and still drives the
+       weight (the drag writes to it), so nothing else needs to change. -->
+  <footer class="controls is-hidden">
     <input type="range" id="weightSlider" min="0" max="28" step="1" value="8" aria-label="Dumbbell weight">
     <div class="slider-labels"><span>10 lb</span><span>45 lb</span><span>80 lb</span></div>
   </footer>

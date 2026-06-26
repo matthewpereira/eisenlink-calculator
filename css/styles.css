@@ -42,7 +42,21 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  /* The page itself doesn't scroll — vertical touch-drag adjusts the weight.
+     touch-action: none stops the browser from claiming fast swipes for
+     scrolling (which would cancel the drag); overscroll-behavior kills
+     pull-to-refresh / bounce; user-select stops stray text highlighting. */
+  touch-action: none;
+  overscroll-behavior: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
+
+/* The range input keeps its own touch handling so its thumb stays draggable. */
+#weightSlider { touch-action: auto; }
+
+/* Temporarily hidden for user testing — kept in the DOM so it still works. */
+.is-hidden { display: none !important; }
 
 /* Full-height app column — fills the viewport on a phone */
 .app {
@@ -54,15 +68,16 @@ body {
   display: flex;
   flex-direction: column;
   gap: clamp(14px, 3vh, 26px);
-  padding: clamp(20px, 5vw, 32px) clamp(18px, 5vw, 30px) clamp(22px, 4vh, 34px);
+  padding: clamp(18px, 5vw, 32px) clamp(18px, 5vw, 30px) clamp(18px, 4vh, 34px);
 }
 
 /* Staggered page-load reveal */
 .app > * { animation: rise 0.6s cubic-bezier(.2,.7,.2,1) both; }
 .masthead { animation-delay: 0.02s; }
-.stage    { animation-delay: 0.10s; }
-.breakdown{ animation-delay: 0.18s; }
-.controls { animation-delay: 0.26s; }
+.readout  { animation-delay: 0.10s; }
+.stage    { animation-delay: 0.18s; }
+.breakdown{ animation-delay: 0.26s; }
+.controls { animation-delay: 0.34s; }
 @keyframes rise {
   from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: none; }
@@ -71,41 +86,7 @@ body {
   .app > * { animation: none; }
 }
 
-/* Masthead */
-.masthead {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 14px;
-  display: none;
-}
-.brand-name {
-  display: block;
-  font-size: 16px;
-  font-weight: 600;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--ink);
-}
-.brand-sub {
-  display: block;
-  margin-top: 4px;
-  font-size: 12px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.capacity {
-  font-size: 13px;
-  letter-spacing: 1px;
-  color: var(--muted);
-  white-space: nowrap;
-  padding-top: 4px;
-}
-
-/* Stage — dumbbell + giant readout; grows to absorb spare height */
+/* Stage — dumbbell diagram, centered in the space below the readout */
 .stage {
   flex: 1;
   width: 100%;
@@ -115,27 +96,26 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(12px, 2.6vh, 26px);
 }
 
-/* Big weight readout — the answer */
+/* Big weight readout — the answer; fills the upper area above the dumbbell */
 .readout {
   display: flex;
   align-items: baseline;
   justify-content: center;
-  gap: 10px;
-  padding-top: 2em;
+  gap: clamp(6px, 2vw, 14px);
+  margin-top: 5vh;
 }
 .readout-number {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(108px, 36vw, 172px);
-  line-height: 0.78;
+  font-size: clamp(280px, 60vw, 350px);
+  line-height: 1;
   letter-spacing: 1px;
   color: var(--ink);
 }
 .readout-unit {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(30px, 8vw, 46px);
+  font-size: clamp(50px, 8vw, 46px);
   line-height: 1;
   letter-spacing: 1px;
   color: var(--muted);
@@ -188,22 +168,22 @@ input[type=range]::-moz-range-thumb {
 .breakdown {
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
-  padding: 4px 0;
+  padding: 10px 0;
 }
 
 .breakdown-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 9px 0;
+  padding: 12px 0;
   border-bottom: 1px solid var(--line);
-  font-size: 15px;
+  font-size: 18px;
 }
 
 .breakdown-row:last-child { border-bottom: none; }
 .breakdown-row .lbl { color: var(--chrome); display: flex; align-items: center; gap: 10px; min-width: 0; }
 .breakdown-row .val { font-weight: 500; color: var(--text); white-space: nowrap; flex-shrink: 0; padding-left: 10px; }
-.breakdown-row .sub { font-size: 13px; color: var(--muted); margin-left: 6px; }
+.breakdown-row .sub { font-size: 18px; color: var(--muted); margin-left: 6px; }
 
 /* Sub-label rows (↳ N per side) always reserve the same height so the
    layout below the breakdown never shifts as plates change. */
@@ -211,26 +191,21 @@ input[type=range]::-moz-range-thumb {
   padding: 1px 0 4px 20px;
   border-bottom: none;
   min-height: 21px;
-  font-size: 13px;
+  font-size: 18px;
 }
-
-.dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
-.dot-handle  { background: #4d4d4d; }
-.dot-5lb     { background: #2a2a2a; border: 1px solid #4a4a4a; }
-.dot-2_5lb   { background: #283038; border-top: 2px solid var(--blue); }
-.dot-screw   { background: #8a8a8a; }
 
 /* Visual dumbbell */
 .dumbbell-viz {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 86px;
+  min-height: 100px;
   /* hidden (not visible) so the fixed-width .db-row can't force the whole
      layout wider than the viewport; fitViz scales the row to fit this box. */
   overflow: hidden;
   width: 100%;
   min-width: 0;
+  margin-bottom: 20px;
 }
 
 /* inner row holds the actual parts; it scales down to fit narrow screens */
@@ -249,7 +224,7 @@ input[type=range]::-moz-range-thumb {
 /* Center grip — squared bar, butted flush against the fixed plates so the
    grip + fixed plates read as one continuous handle. */
 .db-handle {
-  width: 64px; height: 22px;
+  width: 90px; height: 28px;
   background: var(--handle);
   border-radius: 0;
   margin: 0;
@@ -259,7 +234,7 @@ input[type=range]::-moz-range-thumb {
 /* Fixed end plates welded to the grip — full plate height, a touch wider than a
    loose plate, flush to the grip. */
 .db-fixed {
-  width: 8px; height: 84px;
+  width: 7px; height: 140px;
   background: var(--handle);
   border-radius: 1px;
   margin: 0;
@@ -268,19 +243,19 @@ input[type=range]::-moz-range-thumb {
 
 /* 5 lb plate — tall flat black bar */
 .db-plate-5 {
-  width: 12px; height: 84px;
+  width: 14px; height: 140px;
   background: var(--chrome-bright);
   border-radius: 2px;
-  margin: 0 2px;
+  margin: 0 3px;
   flex-shrink: 0;
 }
 
 /* 2.5 lb micro plate — exactly half the width of a 5 lb plate, same height */
 .db-plate-2_5 {
-  width: 6px; height: 84px;
+  width: 7px; height: 140px;
   background: var(--chrome-25plate);
   border-radius: 1px;
-  margin: 0 2px;
+  margin: 0 3px;
   flex-shrink: 0;
 }
 
@@ -290,17 +265,17 @@ input[type=range]::-moz-range-thumb {
 .db-screw {
   display: flex;
   align-items: center;
-  margin: 0 5px;
+  margin: 0 3px;
   flex-shrink: 0;
 }
 .db-screw-cap {
-  width: 10px; height: 30px;
+  width: 10px; height: 50px;
   background: #8a8a8a;
   border-radius: 2px;
   flex-shrink: 0;
 }
 .db-screw-shank {
-  width: 16px; height: 9px;
+  width: 20px; height: 9px;
   background: #8a8a8a;
   border-radius: 1px;
   flex-shrink: 0;
@@ -308,37 +283,24 @@ input[type=range]::-moz-range-thumb {
 /* keeps a permanent slot for the screw even when removed, so the row width
    (and the whole layout) doesn't shift between 10 lb and 15 lb */
 .db-screw-slot {
-  width: 26px; height: 30px;
-  margin: 0 5px;
+  width: 30px; height: 30px;
+  margin: 0 3px;
   flex-shrink: 0;
   visibility: hidden;
 }
 
 .db-ghost-5 {
-  width: 12px; height: 84px;
+  width: 14px; height: 140px;
   border: 1.5px dashed #c2c5cb;
   border-radius: 4px;
-  margin: 0 2px;
+  margin: 0 3px;
   flex-shrink: 0;
 }
 
 .db-ghost-2_5 {
-  width: 6px; height: 84px;
+  width: 7px; height: 140px;
   border: 1.5px dashed #c2c5cb;
   border-radius: 3px;
-  margin: 0 2px;
+  margin: 0 3px;
   flex-shrink: 0;
 }
-
-/* Legend */
-.legend {
-  display: flex;
-  gap: 10px 16px;
-  flex-wrap: wrap;
-  justify-content: center;
-  font-size: 13px;
-  letter-spacing: 0.3px;
-  color: var(--chrome);
-}
-
-.legend-item { display: flex; align-items: center; gap: 6px; }
