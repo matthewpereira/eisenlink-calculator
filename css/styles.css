@@ -104,18 +104,21 @@ body {
   align-items: baseline;
   justify-content: center;
   gap: clamp(6px, 2vw, 14px);
-  margin-top: 5vh;
+  margin-top: clamp(6px, 2.5vh, 40px);
 }
+/* Sized against BOTH width and height so it can't dominate a short phone
+   screen. On a small viewport min(50vw, 30vh) wins, leaving room below for the
+   dumbbell + breakdown; on a large screen the 350px cap holds. */
 .readout-number {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(280px, 60vw, 350px);
+  font-size: clamp(120px, min(50vw, 30vh), 350px);
   line-height: 1;
   letter-spacing: 1px;
   color: var(--ink);
 }
 .readout-unit {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(50px, 8vw, 46px);
+  font-size: clamp(28px, min(8vw, 5vh), 60px);
   line-height: 1;
   letter-spacing: 1px;
   color: var(--muted);
@@ -199,13 +202,17 @@ input[type=range]::-moz-range-thumb {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100px;
-  /* hidden (not visible) so the fixed-width .db-row can't force the whole
-     layout wider than the viewport; fitViz scales the row to fit this box. */
+  /* Fills the leftover space in the stage so fitViz can scale the row to the
+     available HEIGHT as well as width — on a short screen the box shrinks and
+     the dumbbell shrinks with it instead of pushing the breakdown off-screen. */
+  flex: 1;
+  min-height: 0;
+  /* hidden (not visible) so the fixed-size .db-row can't force the whole
+     layout wider/taller than its box; fitViz scales the row to fit this box. */
   overflow: hidden;
   width: 100%;
   min-width: 0;
-  margin-bottom: 20px;
+  margin-bottom: clamp(8px, 2vh, 20px);
 }
 
 /* inner row holds the actual parts; it scales down to fit narrow screens */

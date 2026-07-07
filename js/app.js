@@ -145,19 +145,22 @@ function buildViz(cfg) {
   return html;
 }
 
-// Scale the .db-row inside a viz container down to fit if it overflows
+// Scale the .db-row inside a viz container down to fit its box — constrained by
+// BOTH width (narrow phones) and height (short phones), so the dumbbell shrinks
+// to whatever room the stage has left rather than overflowing. Never upscales.
 function fitViz(containerId) {
   const container = document.getElementById(containerId);
   if (!container) return;
   const row = container.querySelector('.db-row');
   if (!row) return;
   row.style.transform = 'scale(1)'; // reset before measuring
-  const avail = container.clientWidth;
-  const needed = row.scrollWidth;
-  if (needed > avail && avail > 0) {
-    const scale = avail / needed;
-    row.style.transform = `scale(${scale})`;
-  }
+  const availW = container.clientWidth;
+  const availH = container.clientHeight;
+  const neededW = row.scrollWidth;
+  const neededH = row.scrollHeight;
+  if (availW <= 0 || availH <= 0 || neededW <= 0 || neededH <= 0) return;
+  const scale = Math.min(availW / neededW, availH / neededH, 1);
+  if (scale < 1) row.style.transform = `scale(${scale})`;
 }
 
 // Slider — index into WEIGHT_LIST
