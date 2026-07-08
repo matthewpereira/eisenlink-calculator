@@ -180,13 +180,13 @@ input[type=range]::-moz-range-thumb {
   align-items: center;
   padding: 12px 0;
   border-bottom: 1px solid var(--line);
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .breakdown-row:last-child { border-bottom: none; }
 .breakdown-row .lbl { color: var(--chrome); display: flex; align-items: center; gap: 10px; min-width: 0; }
 .breakdown-row .val { font-weight: 500; color: var(--text); white-space: nowrap; flex-shrink: 0; padding-left: 10px; }
-.breakdown-row .sub { font-size: 18px; color: var(--muted); margin-left: 6px; }
+.breakdown-row .sub { font-size: 16px; color: var(--muted); margin-left: 6px; }
 
 /* Sub-label rows (↳ N per side) always reserve the same height so the
    layout below the breakdown never shifts as plates change. */
@@ -194,7 +194,7 @@ input[type=range]::-moz-range-thumb {
   padding: 1px 0 4px 20px;
   border-bottom: none;
   min-height: 21px;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 /* Visual dumbbell */
